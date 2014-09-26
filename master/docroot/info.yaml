@@ -1,0 +1,21 @@
+type: repo
+repo: git@this-is-your-git-host:common/drupal-core.git # Edit this. This is your Drupal core repository.
+order: 1
+states:
+  development:
+    type: branch
+    version: master
+  staging:
+    type: branch
+    version: master
+  stable:
+    type: branch
+    version: master
+hooks:
+  builder:
+    after_execute:
+      - type: :script
+        location: $INFO$/after_build.sh
+        execution_dir: $PROJECT$
+        params:
+          - environment

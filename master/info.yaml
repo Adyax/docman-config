@@ -1,0 +1,13 @@
+status: enabled
+type: root
+repo: subscription_name@svn-xxxx.prod.hosting.acquia.com:subscription_name.git # Edit this. This is the target git url of where docman will push full docroot
+states:
+  development:
+    type: branch
+    version: develop
+  staging:
+    type: branch
+    version: staging
+  stable:
+    type: branch
+    version: master

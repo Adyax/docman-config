@@ -1,0 +1,27 @@
+status: enabled
+type: repo
+repo: git@this-is-your-git-host:common/common.git # Edit this. This is your repository with common modules for everyone.
+order: 30
+states: # Git flow! 
+  development:
+    type: branch
+    version: develop
+  staging:
+    type: branch
+    version: master
+  stable:
+    source:
+      type: :retrieve_from_repo
+      repo: :project_repo
+      branch: state_stable
+      file: info.yaml
+hooks:
+  builder:
+    after_execute:
+      - type: :script
+        location: $INFO$/after_build.sh
+        execution_dir: $PROJECT$
+        params:
+          - environment
+
+

@@ -1,0 +1,25 @@
+---
+environments:
+  dev:
+    deploy_target: git_target
+    state: development
+    target_checker:
+      handler: :ssh
+      file_path: /mnt/www/html/subscription_name_dev # Edit this!
+      ssh_host: staging-xxxx.prod.hosting.acquia.com # Edit this!
+      ssh_user: subscription_name # Edit this!
+  test:
+    deploy_target: git_target
+    state: staging
+    target_checker:
+      handler: :ssh
+      file_path: none
+      file_path: /mnt/www/html/subscription_name_dev # Edit this!
+      ssh_host: staging-xxxx.prod.hosting.acquia.com # Edit this!
+      ssh_user: subscription_name # Edit this!
+  prod:
+    deploy_target: git_target
+    state: stable
+    tagger:
+      enabled: true
+      handler: :option

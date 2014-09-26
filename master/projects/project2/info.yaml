@@ -1,0 +1,46 @@
+type: repo
+repo: git@this-is-your-git-host:project2.git # Edit this. This is your project repository with custom code.
+states:
+  development:
+    type: branch
+    version: develop
+  staging:
+    type: branch
+    version: master
+  stable:
+    source:
+      type: :retrieve_from_repo
+      repo: :project_repo
+      branch: state_stable
+      file: info.yaml
+hooks:
+  builder:
+    after_execute:
+      - type: :script
+        location: $INFO$/after_build.sh
+        execution_dir: $PROJECT$
+        params:
+          - environment
+  deployer:
+    before_deploy:
+      - type: :script
+        location: $PROJECT$/tools/deploy/common/before/before.sh
+        execution_dir: $ROOT$/docroot
+        params:
+          - environment
+      - type: :script
+        location: $PROJECT$/tools/deploy/$ENVIRONMENT$/before/before.sh
+        execution_dir: $ROOT$/docroot
+        params:
+          - environment
+    after_deploy:
+      - type: :script
+        location: $PROJECT$/tools/deploy/$ENVIRONMENT$/after/after.sh
+        execution_dir: $ROOT$/docroot
+        params:
+          - environment
+      - type: :script
+        location: $PROJECT$/tools/deploy/common/after/after.sh
+        execution_dir: $ROOT$/docroot
+        params:
+          - environment

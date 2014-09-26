@@ -1,0 +1,29 @@
+status: enabled
+type: repo
+repo: git@this-is-your-git-host:sites.git # Edit this. This is your sites repository with the lsit of websites.
+order: 20
+states:
+  development:
+    type: branch
+    version: develop
+  staging:
+    type: branch
+    version: master
+  stable:
+    source:
+      type: :retrieve_from_repo
+      repo: :project_repo
+      branch: state_stable
+      file: info.yaml
+hooks:
+  builder:
+    after_execute:
+      - type: :create_symlink
+        target_dir: master/docroot
+      - type: :script
+        location: $INFO$/after_build.sh
+        execution_dir: $PROJECT$
+        params:
+          - environment
+
+
