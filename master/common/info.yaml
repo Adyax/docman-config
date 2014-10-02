@@ -23,5 +23,3 @@ hooks:
         execution_dir: $PROJECT$
         params:
           - environment
-
-
